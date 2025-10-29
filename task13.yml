@@ -1,0 +1,16 @@
+#Use the command module to run df -h, register the output, and display the available space in /.
+---
+- name: check available space in root directory
+  hosts: localhost
+  gather_facts: no
+  tasks:
+   - name: Run df -h command 
+     command:
+      cmd: df -h /
+     register: df
+   - name: display available space in root directory
+     debug:
+      msg: "availble space in : {{df.stdout_lines}}"
+...
+
+ 

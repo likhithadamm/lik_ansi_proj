@@ -1,0 +1,16 @@
+#Create a playbook that checks whether /etc/passwd exists using the stat module, registers the output, and prints whether the file exists or not.
+--- 
+- name: check if /etc/passwd exists
+  hosts: localhost
+  become: true
+  gather_facts: no
+  tasks:
+  - name: check if /etc/passwd exists
+    ansible.builtin.stat:
+     path: /etc/passwd
+    register: stat
+  - name: print whether file exists
+    ansible.builtin.debug:
+     msg: "File exists: {{stat.stat.exists}}"
+...
+    

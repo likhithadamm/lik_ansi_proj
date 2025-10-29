@@ -1,0 +1,15 @@
+#Write a playbook that runs the uptime command, registers its output, and prints the result using debug.
+---
+- name: create a playbook to run uptime command
+  hosts: all
+  become: true
+  gather_facts: no
+  tasks:
+  - name: Run uptime command
+    ansible.builtin.command: 
+      cmd: uptime
+    register: output
+  - name: Print the uptime result
+    ansible.builtin.debug:
+      msg: "{{ output['stdout_lines'] }}"
+...

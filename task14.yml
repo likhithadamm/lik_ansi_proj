@@ -1,0 +1,16 @@
+#14 Write a playbook that uses the yum module to check whether git is installed, register the output, and display whether a change was made.
+--- 
+- name: To check if git is installed
+  hosts: localhost
+  gather_facts: no
+  become: yes
+  tasks:
+   - name: check if git is installed
+     yum:
+      name: git
+      state: present
+     register: installed
+   - name: display whether git is installed 
+     debug: 
+      msg: "git was installed: {{ installed }}"
+...
