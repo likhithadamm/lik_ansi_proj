@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 #we are in main branch
 - name: My First Playbook
   hosts: sapadm
