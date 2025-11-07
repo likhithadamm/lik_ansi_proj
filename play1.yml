@@ -1,6 +1,5 @@
 ---
-<<<<<<< HEAD
-#we are in main branch
+#hi 
 - name: My First Playbook
   hosts: sapadm
   become: True
