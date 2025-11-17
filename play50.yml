@@ -1,0 +1,9 @@
+---
+- name: play to reboot remote services
+  hosts: all
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: Reboot remote servers
+     reboot:
+...

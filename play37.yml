@@ -1,0 +1,9 @@
+---
+- name: Demonstrate CPU and Memory info
+  hosts: localhost
+  gather_facts: yes
+  tasks:
+    - name: show CPU and Memory information
+      ansible.builtin.debug:
+        msg: "Total CPUs: {{ ansible_facts['processor_vcpus'] }} and cores per cpu: {{ ansible_facts['processor_cores'] }}, Total Memory: {{ ansible_facts['memtotal_mb'] }} and free memory: {{ ansible_facts['memfree_mb'] }}"
+... 

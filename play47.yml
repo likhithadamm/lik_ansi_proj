@@ -1,0 +1,12 @@
+---
+- name: play to demonstrate loop control structure in ansible
+  hosts: localhost
+  tasks: 
+   - name: Demonstrate loop
+     debug:
+      msg: "This is iteration"
+     loop: 
+      - 1
+      - 2
+      - 3
+...

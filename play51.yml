@@ -1,0 +1,17 @@
+---
+- name: demonstrate shell module. This is used to execute a shell command
+  hosts: localhost
+  become: true
+  tasks: 
+  - name: task to execute a shell command
+    shell: vgs
+    register: out
+  - name: print the output
+    debug:
+     msg: "{{out.stdout_lines}}"
+...
+#shell module runs commands via shell, by default /bin/sh. it supports pipe, redirects. 
+#we usually use shell module for commands needing shell features. Running command using shell module, there might be a risk of shell injection.
+#command module does not run via shell. no support of pipes, redirects and can be used to execute simple commands. There is no risk of shell injection.
+#for example , if you want to run echo $HOME, you must use shell module and command module wont work.
+#please note that it is important you are aware of the differences between command and shell module.

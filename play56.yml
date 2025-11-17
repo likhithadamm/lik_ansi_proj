@@ -1,0 +1,8 @@
+---
+- name: play to print ansible_hostname
+  hosts: sapprod
+  tasks:
+  - name: show hostname 
+    debug:
+     msg: "the name of server {{ansible_hostname}}"
+...

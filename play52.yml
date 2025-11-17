@@ -1,0 +1,13 @@
+---
+- name: call the script from shell module
+  hosts: [192.168.1.39, 192.168.1.44]
+  become: true
+  tasks:
+  - name: push script to remote server
+    copy: 
+     src: likscript.sh
+     dest: /tmp/likscript.sh
+     mode: '0555'
+  - name: shell module to execute a script
+    shell: /tmp/likscript.sh
+...

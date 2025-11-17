@@ -7,6 +7,6 @@
     ansible.builtin.lineinfile:
       path: /home/ansible/playbooks/vars/ashish.txt
       line: "Amrutha"
-      insertafter: ^likhitha
+      insertafter: ^jk
       backup: yes #takes file backup before you modify the file
 ...

@@ -1,0 +1,16 @@
+---
+- name: play to demonstrate task variable
+  hosts: localhost
+  vars:
+   color: red
+  tasks: 
+  - name: Task to print the variable
+    debug:
+      msg: "the color {{color}}"
+  - name: Task to print variable
+    vars: 
+      color: blue #this variable is defined in the task. so its scope is only limited tp scope
+                  #this variable override the play variable
+    debug:
+      msg: "The color is {{color}}"
+...

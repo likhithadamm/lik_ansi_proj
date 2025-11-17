@@ -1,0 +1,17 @@
+---
+- name: demonstrate magic variable
+  hosts: localhost
+  tasks: 
+   - name: print the hostgroup
+     debug:
+      var: groups
+   - name: print the host_names
+     debug: 
+      var: group_names
+   - name: print the inventory_hostname
+     debug: 
+      var: inventory_hostname
+   - name: print magic variable
+     debug: 
+      var: hostvars 
+...
