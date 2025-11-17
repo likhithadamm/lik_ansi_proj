@@ -8,7 +8,5 @@
        src: /home/ansible/new_ansi_dir
        dest: /home/ansible/playbooks-01/soft
        state: link #Soft link is create
-       owner: root
-       group: ansible
-       mode: '0750'
+       force: yes
 ...
