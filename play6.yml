@@ -6,7 +6,7 @@
    - name: creater an empty file
      ansible.builtin.file:
        src: /home/ansible/new_ansi_dir
-       dest: /home/ansible/playbooks-01/soft
+       dest: /home/ansible
        state: link #Soft link is create
        force: yes
 ...
