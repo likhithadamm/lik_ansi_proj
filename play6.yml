@@ -5,8 +5,10 @@
   tasks:
    - name: creater an empty file
      ansible.builtin.file:
-       src: /home/ansible/new_ansi_dir
-       dest: /home/ansible
+       src: /home/jenkins/lik
+       dest: /home/jenkins/lik1
        state: link #Soft link is create
-       force: yes
+       owner: ansible
+       group: jenkins
+       mode: "0570"
 ...
