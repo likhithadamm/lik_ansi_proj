@@ -1,0 +1,15 @@
+---
+- name: Patch EC2 Linux Servers
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Update all packages
+      yum:
+        name: "*"
+        state: latest
+
+    - name: Reboot if required
+      reboot:
+        msg: "Rebooting after patching"
+        reboot_timeout: 600
