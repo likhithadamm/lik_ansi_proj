@@ -1,0 +1,73 @@
+---
+- name: Create 3 EC2 instances in AWS
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    region: "eu-north-1"
+    vpc_id: "vpc-0b12c745fe666976c"
+    keypair: "likdamm"
+    instance_type: "t3.micro"
+    ami_id: "ami-0c7d68785ec07306c"
+    sg_name: "ansible-sg"
+    allowed_ports:
+      - 22
+      - 80
+      - 443
+    # New variable for the number of instances
+    instance_count: 3 
+
+  tasks:
+
+    # 1 - Create Security Group (This remains unchanged)
+    - name: Create a security group
+      amazon.aws.ec2_security_group:
+        name: "{{ sg_name }}"
+        description: "Security group for EC2"
+        vpc_id: "{{ vpc_id }}"
+        region: "{{ region }}"
+        rules:
+          - proto: tcp
+            ports: "{{ allowed_ports }}"
+            cidr_ip: 0.0.0.0/0
+      register: sg_info
+
+    - debug:
+      msg: "Created SG ID: {{ sg_info.group_id }}"
+
+    # 2 - Launch EC2 Instances (Modified to use count and loop for naming)
+    - name: Launch {{ instance_count }} EC2 instances
+      amazon.aws.ec2_instance:
+        # Use the loop index to create unique names like 'ansible-ec2-1', 'ansible-ec2-2', etc.
+        name: "ansible-ec2-{{ item }}" 
+        instance_type: "{{ instance_type }}"
+        key_name: "{{ keypair }}"
+        image_id: "{{ ami_id }}"
+        region: "{{ region }}"
+        security_group: "{{ sg_info.group_id }}"
+        network:
+          assign_public_ip: true
+        wait: yes
+        wait_timeout: 500
+      register: ec2_info
+      # The loop runs the task for each item in the sequence (1, 2, 3)
+      loop: "{{ range(1, instance_count + 1) | list }}" 
+
+    # 3 - Debug/Display all created Instance IDs and Public IPs
+    - name: Display details of all launched instances
+      debug:
+        msg: "Instance ID: {{ item.instance_ids[0] }}, Public IP: {{ item.instances[0].public_ip_address }}"
+      loop: "{{ ec2_info.results }}"
+      loop_control:
+        label: "{{ item.instance_ids[0] }}" # Provides a cleaner output for the loop
+
+    # 4 - Save Public IPs (Modified to save all IPs in a single file)
+    - name: Save EC2 public IPs to a file
+      ansible.builtin.copy:
+        content: |
+          {% for instance in ec2_info.results %}
+          {{ instance.instances[0].public_ip_address }}
+          {% endfor %}
+        dest: /tmp/ec2_ips.txt
+      delegate_to: localhost
