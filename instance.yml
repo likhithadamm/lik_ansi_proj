@@ -16,7 +16,7 @@
       - 80
       - 443
     # New variable for the number of instances
-    instance_count: 3 
+    instance_count: 3
 
   tasks:
 
@@ -33,14 +33,14 @@
             cidr_ip: 0.0.0.0/0
       register: sg_info
 
-   - debug:
+    - debug:
         msg: "Created SG ID: {{ sg_info.group_id }}"
 
     # 2 - Launch EC2 Instances (Modified to use count and loop for naming)
     - name: Launch {{ instance_count }} EC2 instances
       amazon.aws.ec2_instance:
         # Use the loop index to create unique names like 'ansible-ec2-1', 'ansible-ec2-2', etc.
-        name: "ansible-ec2-{{ item }}" 
+        name: "ansible-ec2-{{ item }}"
         instance_type: "{{ instance_type }}"
         key_name: "{{ keypair }}"
         image_id: "{{ ami_id }}"
@@ -52,7 +52,7 @@
         wait_timeout: 500
       register: ec2_info
       # The loop runs the task for each item in the sequence (1, 2, 3)
-      loop: "{{ range(1, instance_count + 1) | list }}" 
+      loop: "{{ range(1, instance_count + 1) | list }}"
 
     # 3 - Debug/Display all created Instance IDs and Public IPs
     - name: Display details of all launched instances
