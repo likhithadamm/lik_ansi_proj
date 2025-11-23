@@ -1,12 +1,1 @@
-- name: This is able to creater a hardlink
-  hosts: localhost
-  connection: local
-  gather_facts: no
-  become: false
-
-  tasks:
-    - name: Create a hardlink
-      ansible.builtin.file:
-        src: /home/jenkins/agent/workspace/ansible/srcfile.txt
-        dest: /home/jenkins/agent/workspace/ansible/hardlink.txt
-        state: hard
+echo "hello"
